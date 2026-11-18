@@ -11,6 +11,12 @@ const getAllBooks = async (req, res) => {
   } catch (error) {
     console.error("Error getting books:", error);
 
+    if (error.message === "Database is not connected") {
+      return res.status(503).json({
+        message: "Database is unavailable.",
+      });
+    }
+
     res.status(500).json({
       message: "An error occurred while retrieving books.",
     });
@@ -34,6 +40,12 @@ const getSingleBook = async (req, res) => {
     res.status(200).json(book);
   } catch (error) {
     console.error("Error getting book:", error);
+
+    if (error.message === "Database is not connected") {
+      return res.status(503).json({
+        message: "Database is unavailable.",
+      });
+    }
 
     res.status(500).json({
       message: "An error occurred while retrieving the book.",
