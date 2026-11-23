@@ -28,6 +28,11 @@ const getSingleBook = async (req, res) => {
     const db = getDatabase();
 
     const bookId = Number(req.params.id);
+    if (!Number.isInteger(bookId) || bookId <= 0) {
+  return res.status(400).json({
+    message: "Invalid book ID",
+  });
+}
 
     const book = await db.collection("books").findOne({ id: bookId });
 
